@@ -4,21 +4,24 @@ version: 2.1
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
-  say-hello:
+  smoke_test:
     # Specify the execution environment.
     # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
     docker:
-      - image: cimg/base:stable
+      - image: alpine:latest
     # Add steps to the job
     # See: https://circleci.com/docs/2.0/configuration-reference/#steps
     steps:
-      - checkout
-      - run:
-          name: "Say hello"
-          command: "echo Hello, World!"
+      #- checkout
+      - run: apk add --update curl
+      - run: 
+          name: smoke test
+          command: |
+            smoke_test.sh
+      - destroy_environment
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
-  say-hello-workflow:
+  smoke-test-workflow:
     jobs:
-      - say-hello
+      - smoke_test
