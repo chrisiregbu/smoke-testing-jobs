@@ -1,0 +1,7 @@
+#!/bin/bash
+if curl -s --head "https://google.com" 
+then
+  echo "It worked!"
+else
+  echo "It failed"
+fi
